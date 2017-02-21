@@ -9,6 +9,7 @@
 (set-face-attribute 'vertical-border nil :foreground "#b0b0b0")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'base16-default t)
+(global-visual-line-mode 1)
 
 (desktop-save-mode 1)
 (server-start)
@@ -91,10 +92,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/2-2017-goals.org" "~/org/todo.org")) t)
+ '(org-agenda-files (quote ("~/org/2-2017-goals.org" "~/org/todo.org")))
  '(package-selected-packages
    (quote
-    (magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
+    (fish-mode magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
  '(quack-programs
    (quote
     ("mzscheme" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))))
