@@ -35,6 +35,7 @@
 
 ;; org-mode
 (setq org-agenda-files (list "~/org"))
+(setq org-modules (append org-modules '(org-habit)))
 (setq org-log-done t)
 (setq org-agenda-todo-ignore-scheduled t)
 (setq org-agenda-log-mode t)
@@ -47,8 +48,8 @@
 (setq org-enforce-todo-dependencies t)
 (setq org-agenda-dim-blocked-tasks 'invisible)
 (setq org-capture-templates
-    '(("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks")
-       "* TODO %?\n")
+    '(("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks") "* TODO %?\n")
+      ("m" "Meditation log" item (file+headline "~/org/pub/meditation.org" "Practice Log") "- %t: %?\n")
       ("w" "Wants" entry (file+headline "~/org/wants.org" "Wants:") "* %?")
       ("g" "Grocery" plain (file+headline "~/org/groceries.org" "Groceries")
        "- %?\n")
@@ -92,7 +93,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/2-2017-goals.org" "~/org/todo.org")))
+ '(org-agenda-files (quote ("~/org/todo.org")))
  '(package-selected-packages
    (quote
     (fish-mode magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
