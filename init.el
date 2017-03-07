@@ -1,11 +1,15 @@
 ;; styling
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
 (menu-bar-mode -1)
 (setq inhibit-startup-screen t)
 (setq frame-title-format "%b ; %f")
 (setq-default fill-column 80)
-(set-face-attribute 'default t :font "Inconsolata-12")
+
+;; compat hack when built with no-x
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (set-face-attribute 'default t :font "Inconsolata-12"))
+
 (set-face-attribute 'vertical-border nil :foreground "#b0b0b0")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'base16-default t)
@@ -13,6 +17,8 @@
 
 (desktop-save-mode 1)
 (server-start)
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 (require 'misc)
 
@@ -35,7 +41,6 @@
 
 ;; org-mode
 (setq org-agenda-files (list "~/org"))
-(setq org-modules (append org-modules '(org-habit)))
 (setq org-log-done t)
 (setq org-agenda-todo-ignore-scheduled t)
 (setq org-agenda-log-mode t)
@@ -47,6 +52,10 @@
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 5))))
 (setq org-enforce-todo-dependencies t)
 (setq org-agenda-dim-blocked-tasks 'invisible)
+;; wtf
+(defun my-after-load-org ()
+  (add-to-list 'org-modules 'org-habit))
+(eval-after-load "org" '(my-after-load-org))
 (setq org-capture-templates
     '(("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks") "* TODO %?\n")
       ("m" "Meditation log" item (file+headline "~/org/pub/meditation.org" "Practice Log") "- %t: %?\n")
@@ -63,6 +72,9 @@
 (define-key global-map "\C-cr" 'org-remember)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+
+;; man page hooks
+(add-hook 'Man-mode-hook 'delete-other-windows)
 
 ;; dumb jump
 (setq dumb-jump-default-project "~/src")
