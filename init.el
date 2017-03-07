@@ -68,13 +68,19 @@
       ("p" "Idea: programming, software" entry (file+headline "~/org/ideas.org" "Programming") "* %?")
       ("b" "Idea: blog, writing" entry (file+headline "~/org/ideas.org" "Writing") "* %?")
       ("u" "Ughs" plain (file "~/org/ugh.org") "%t: %? \n\n----\n\n")))
+
+(setq org-agenda-custom-commands
+      '(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
+	("c" "creep" tags-todo "+creep")
+	("d" "de"    tags-todo "+de")))
+
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cr" 'org-remember)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
 ;; man page hooks
-(add-hook 'Man-mode-hook 'delete-other-windows)
+;; (add-hook 'Man-mode-hook 'delete-other-windows)
 
 ;; dumb jump
 (setq dumb-jump-default-project "~/src")
@@ -105,7 +111,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/todo.org")))
+ '(org-agenda-files (quote ("~/org/todo.org" "~/org/creep.org")))
  '(package-selected-packages
    (quote
     (fish-mode magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
