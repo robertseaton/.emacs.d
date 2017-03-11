@@ -74,10 +74,15 @@
 	("c" "creep" tags-todo "+creep")
 	("d" "de"    tags-todo "+de")))
 
+(setq org-todo-keywords
+       '((sequence "TODO" "ACTIVE" "|" "DONE")))
+
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cr" 'org-remember)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+
+(setq org-extend-today-until 4)
 
 ;; man page hooks
 ;; (add-hook 'Man-mode-hook 'delete-other-windows)
