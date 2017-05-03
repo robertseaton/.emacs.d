@@ -1,0 +1,17 @@
+ls
+xmonad --recompile && xmonad --restart
+ls sh/eshell
+tmux a
+pacman -Ss xfce4-settings
+pacman -S xfce4-settings
+sudo pacman -S xfce4-settings
+(+ 2 2)
+xfce4-settings-editor
+xfce4-settings-manager 
+ls .config/mimeapps.list 
+open .config/mimeapps.list 
+e .config/mimeapps.list 
+find-file .config/mimeapps.list 
+exo-open http://gwern.net
+ssh root@163.172.138.240 
+fish
