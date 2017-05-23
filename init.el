@@ -8,7 +8,9 @@
 (when (fboundp 'tool-bar-mode)
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
-  (set-face-attribute 'default t :font "Inconsolata-12"))
+  (set-face-attribute 'default t :font "Tamsyn-11"))
+
+(set-fontset-font "fontset-default" 'unicode "Siji")
 
 (set-face-attribute 'vertical-border nil :foreground "#b0b0b0")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
