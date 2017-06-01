@@ -4,13 +4,15 @@
 (setq frame-title-format "%b ; %f")
 (setq-default fill-column 80)
 
-;; compat hack when built with no-x
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (set-default-font "Tamsyn-11"))
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(set-default-font "Tamsyn-11")
+(setq default-frame-alist '((font . "Tamsyn-11")
+			    (vertical-scroll-bars . nil)))
 
 (set-fontset-font "fontset-default" 'unicode "Siji")
+
+
 
 (set-face-attribute 'vertical-border nil :foreground "#b0b0b0")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -118,7 +120,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/todo.org" "~/org/creep.org")))
+ '(org-agenda-files (quote ("~/org/todo.org")))
  '(package-selected-packages
    (quote
     (weechat fish-mode magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
