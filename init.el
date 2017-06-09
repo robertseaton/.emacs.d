@@ -30,7 +30,9 @@
 (setq
    backup-by-copying t      ; don't clobber symlinks
    backup-directory-alist
-    '(("." . "~/scratch"))    ; don't litter my fs tree
+   '((".*" . "~/scratch"))    ; don't litter my fs tree
+   auto-save-file-name-transforms
+   '((".*" . "~/scratch"))
    delete-old-versions t
    kept-new-versions 6
    kept-old-versions 2
@@ -56,6 +58,7 @@
 (setq org-refile-targets '((org-agenda-files . (:maxlevel . 5))))
 (setq org-enforce-todo-dependencies t)
 (setq org-agenda-dim-blocked-tasks 'invisible)
+
 ;; wtf
 (defun my-after-load-org ()
   (add-to-list 'org-modules 'org-habit))
@@ -79,7 +82,37 @@
 	("d" "de"    tags-todo "+de")))
 
 (setq org-todo-keywords
-       '((sequence "TODO" "ACTIVE" "|" "DONE")))
+      '((sequence "TODO" "ACTIVE" "|" "DONE")))
+
+(require 'ox-publish)
+(setq org-publish-project-alist
+      '(
+	("org-notes"
+ :base-directory "~/org/pub"
+ :base-extension "org"
+ :publishing-directory "~/pub/"
+ :recursive t
+ :publishing-function org-html-publish-to-html
+ :headline-levels 4             ; Just the default for this project.
+ :auto-preamble t
+ :auto-sitemap t
+ :style "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\" />"
+ :sitemap-filename "index.org" 
+ :sitemap-title "rs.io" 
+ )
+	("org-static"
+ :base-directory "~/org/pub/"
+ :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+ :publishing-directory "~/pub/"
+ :recursive t
+ :publishing-function org-publish-attachment
+ )
+("org" :components ("org-notes" "org-static"))
+))
+
+(add-hook 'org-mode-hook
+          (lambda()
+            (add-hook 'after-save-hook 'org-publish-current-file nil 'make-it-local)))
 
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cr" 'org-remember)
