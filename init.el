@@ -29,14 +29,15 @@
 ;; temporary files
 (setq
    backup-by-copying t      ; don't clobber symlinks
-   backup-directory-alist
-   '((".*" . "~/scratch"))    ; don't litter my fs tree
-   auto-save-file-name-transforms
-   '((".*" . "~/scratch"))
    delete-old-versions t
    kept-new-versions 6
    kept-old-versions 2
    version-control t)       ; use versioned backups
+
+(setq backup-directory-alist
+`((".*" . "~/scratch/")))
+(setq auto-save-file-name-transforms
+          `((".*" "~/scratch" t)))
 
 ;; elpa
 (package-initialize)
@@ -110,9 +111,9 @@
 ("org" :components ("org-notes" "org-static"))
 ))
 
-(add-hook 'org-mode-hook
-          (lambda()
-            (add-hook 'after-save-hook 'org-publish-current-file nil 'make-it-local)))
+;; (add-hook 'org-mode-hook
+;;           (lambda()
+;;             (add-hook 'after-save-hook 'org-publish-current-file nil 'make-it-local)))
 
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cr" 'org-remember)
