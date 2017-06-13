@@ -2,7 +2,7 @@
 (menu-bar-mode -1)
 (setq inhibit-startup-screen t)
 (setq frame-title-format "%b ; %f")
-(setq-default fill-column 80)
+
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -38,6 +38,9 @@
 `((".*" . "~/scratch/")))
 (setq auto-save-file-name-transforms
           `((".*" "~/scratch" t)))
+
+(setq-default fill-column 80)
+(add-hook 'text-mode-hook 'auto-fill-mode)
 
 ;; elpa
 (package-initialize)
@@ -157,7 +160,7 @@
  '(org-agenda-files (quote ("~/org/todo.org")))
  '(package-selected-packages
    (quote
-    (weechat fish-mode magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
+    (smooth-scrolling weechat fish-mode magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
  '(quack-programs
    (quote
     ("mzscheme" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))))
