@@ -100,7 +100,7 @@
  :headline-levels 4             ; Just the default for this project.
  :auto-preamble t
  :auto-sitemap t
- :style "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\" />"
+ :style "<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\" />"
  :sitemap-filename "index.org" 
  :sitemap-title "rs.io" 
  )
@@ -113,10 +113,6 @@
  )
 ("org" :components ("org-notes" "org-static"))
 ))
-
-;; (add-hook 'org-mode-hook
-;;           (lambda()
-;;             (add-hook 'after-save-hook 'org-publish-current-file nil 'make-it-local)))
 
 (define-key global-map "\C-cc" 'org-capture)
 (define-key global-map "\C-cr" 'org-remember)
