@@ -1,4 +1,4 @@
-p;; styling
+;; styling
 (menu-bar-mode -1)
 (setq inhibit-startup-screen t)
 (setq frame-title-format "%b ; %f")
