@@ -42,6 +42,8 @@
 (setq-default fill-column 80)
 (add-hook 'text-mode-hook 'auto-fill-mode)
 
+(setq browse-url-browser-function 'browse-url-firefox)
+
 ;; elpa
 (package-initialize)
 (add-to-list 'package-archives
