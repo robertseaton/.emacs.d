@@ -54,7 +54,7 @@
 (setq org-log-done t)
 (setq org-agenda-todo-ignore-scheduled t)
 (setq org-agenda-log-mode t)
-(setq org-default-notes-file "~/org/todo.org")
+(setq org-default-notes-file "~/org/inbox.org")
 (setq org-startup-indented t)
 (setq org-agenda-start-on-weekday nil)
 (setq org-agenda-ndays 1)
@@ -63,22 +63,55 @@
 (setq org-enforce-todo-dependencies t)
 (setq org-agenda-dim-blocked-tasks 'invisible)
 
+(defun org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (outline-previous-heading)))
+   "/DONE" 'agenda))
+
+;; open a capture frame from xmonad
+
+
+(defadvice org-capture-finalize 
+    (after delete-capture-frame activate)  
+  "Advise capture-finalize to close the frame"  
+  (if (equal "capture" (frame-parameter nil 'name))  
+    (delete-frame)))
+
+(defadvice org-capture-destroy 
+    (after delete-capture-frame activate)  
+  "Advise capture-destroy to close the frame"  
+  (if (equal "capture" (frame-parameter nil 'name))  
+    (delete-frame)))
+
+(use-package noflet
+  :ensure t)
+
+(defun make-capture-frame ()
+  "Create a new frame and run org-capture."
+  (interactive)
+  (make-frame '((name . "capture")))
+  (select-frame-by-name "capture")
+  (delete-other-windows)
+  (noflet ((switch-to-buffer-other-window (buf) (switch-to-buffer buf)))
+    (org-capture)))
+
+
 ;; wtf
 (defun my-after-load-org ()
-  (add-to-list 'org-modules 'org-habit))
+  (add-to-list 'org-modules 'org-habit)
+  (add-to-list 'org-modules 'org-checklist))
 (eval-after-load "org" '(my-after-load-org))
 (setq org-capture-templates
-    '(("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks") "* TODO %?\n")
-      ("m" "Meditation log" item (file+headline "~/org/pub/meditation.org" "Practice Log") "- %t: %?\n")
-      ("w" "Wants" entry (file+headline "~/org/wants.org" "Wants:") "* %?")
-      ("g" "Grocery" plain (file+headline "~/org/groceries.org" "Groceries")
-       "- %?\n")
-      ("l" "Learn" entry (file+headline "~/org/curiosity.org" "I'd like to learn about...") "* %?")
-      ("f" "Freeform writing" plain (file "~/org/freewrite.org") "%t:\n\n %? \n\n----\n\n")
-      ("s" "Thought" plain (file "~/org/thoughts.org") "%t: %? \n\n----\n\n")
-      ("p" "Idea: programming, software" entry (file+headline "~/org/ideas.org" "Programming") "* %?")
-      ("b" "Idea: blog, writing" entry (file+headline "~/org/ideas.org" "Writing") "* %?")
-      ("u" "Ughs" plain (file "~/org/ugh.org") "%t: %? \n\n----\n\n")))
+      '(("t" "Todo" entry (file+headline "~/org/inbox.org" "Tasks") "* TODO %?\n")
+	("l" "Links" plain (file+headline "~/org/pub/links.org" "Links") "- %?\n")
+	("m" "Meditation log" item (file+headline "~/org/pub/experience.org" "Practice Log") "- %t: %?\n")
+	("r" "Writing research" entry (file+headline "~/org/research.org" "Research") "* %?\n")
+	("f" "Freeform writing" plain (file "~/org/freewrite.org") "%t:\n\n %? \n\n----\n\n")
+	("b" "Bucket List" entry (file+headline "~/org/someday.org" "Bucket List") "* %?\n")
+	("u" "Ughs" plain (file "~/org/ugh.org") "%t: %? \n\n----\n\n")))
 
 (setq org-agenda-custom-commands
       '(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
@@ -86,7 +119,11 @@
 	("d" "de"    tags-todo "+de")))
 
 (setq org-todo-keywords
-      '((sequence "TODO" "|" "DONE")))
+      '((sequence "TODO(t)" "BLOCKED(b)" "|" "DONE(d)")))
+
+(global-auto-revert-mode t)
+
+(setq org-log-done 'time)
 
 (require 'ox-publish)
 (setq org-publish-project-alist
@@ -153,10 +190,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/org/todo.org" "~/org/goals.org")))
+ '(org-agenda-files
+   (quote
+    ("~/org/inbox.org" "~/org/projects.org" "~/org/tickler.org")))
  '(package-selected-packages
    (quote
-    (sicp smooth-scrolling weechat fish-mode magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
+    (noflet use-package sicp smooth-scrolling weechat fish-mode magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
  '(quack-programs
    (quote
     ("mzscheme" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi"))))
