@@ -42,7 +42,8 @@
 (setq-default fill-column 80)
 (add-hook 'text-mode-hook 'auto-fill-mode)
 
-(setq browse-url-browser-function 'browse-url-firefox)
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "firefox")
 
 ;; elpa
 (package-initialize)
@@ -73,9 +74,18 @@
      (setq org-map-continue-from (outline-previous-heading)))
    "/DONE" 'agenda))
 
+;; save org files when TODO state changes so that files will be propagated to jupiter. 
+(defmacro η (fnc)
+  "Return function that ignores its arguments and invokes FNC."
+  `(lambda (&rest _rest)
+     (funcall ,fnc)))
+
+(advice-add 'org-deadline       :after (η #'org-save-all-org-buffers))
+(advice-add 'org-schedule       :after (η #'org-save-all-org-buffers))
+(advice-add 'org-store-log-note :after (η #'org-save-all-org-buffers))
+(advice-add 'org-todo           :after (η #'org-save-all-org-buffers))
+
 ;; open a capture frame from xmonad
-
-
 (defadvice org-capture-finalize 
     (after delete-capture-frame activate)  
   "Advise capture-finalize to close the frame"  
