@@ -3,7 +3,6 @@
 (setq inhibit-startup-screen t)
 (setq frame-title-format "%b ; %f")
 
-
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (set-default-font "Tamsyn-11")
@@ -11,8 +10,6 @@
 			    (vertical-scroll-bars . nil)))
 
 (set-fontset-font "fontset-default" 'unicode "Siji")
-
-
 
 (set-face-attribute 'vertical-border nil :foreground "#b0b0b0")
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
@@ -131,7 +128,7 @@
 	("d" "de"    tags-todo "+de")))
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "BLOCKED(b)" "|" "DONE(d)")))
+      '((type "TODO(t)" "BLOCKED(b)" "GOAL(g)" "|" "DONE(d)")))
 
 (global-auto-revert-mode t)
 
@@ -204,7 +201,7 @@
  ;; If there is more than one, they won't work right.
  '(org-agenda-files
    (quote
-    ("~/org/inbox.org" "~/org/projects.org" "~/org/tickler.org")))
+    ("~/org/inbox.org" "~/org/mobile.org" "~/org/projects.org" "~/org/tickler.org")))
  '(package-selected-packages
    (quote
     (noflet use-package sicp smooth-scrolling weechat fish-mode magit dumb-jump beeminder haskell-mode yasnippet yari wc-mode sml-mode smartparens slime sass-mode rvm ruby-tools rubocop rainbow-mode quack project-mode php-mode paredit org2blog nrepl markdown-mode magithub langtool inf-ruby helm ghc geiser flymake-easy dired+ color-theme)))
